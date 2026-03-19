@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaahi — Investor Test</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+–bg: #f5f2eb;
+–bg2: #ede9e0;
+–bg3: #e3ded3;
+–ink: #0f0f0f;
+–ink2: #2a2a2a;
+–ink3: #555555;
+–ink4: #999999;
+–rule: #c8c2b4;
+–accent: #0f0f0f;
+–correct: #1a4a1a;
+–wrong: #4a1a1a;
+–correct-bg: #e8f0e8;
+–wrong-bg: #f0e8e8;
+–gold: #8a6a00;
+}
+
+- { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+background: var(–bg);
+color: var(–ink);
+font-family: ‘IBM Plex Sans’, sans-serif;
+font-size: 16px;
+line-height: 1.6;
+}
+
+body {
+min-height: 100vh;
+max-width: 820px;
+margin: 0 auto;
+padding: 0 24px;
+}
+
+/* ── SCREENS ── */
+.screen {
+display: none;
+min-height: 100vh;
+flex-direction: column;
+}
+.screen.active { display: flex; }
+
+/* ── HEADER RULE ── */
+.site-header {
+border-bottom: 2px solid var(–ink);
+padding: 20px 0 12px;
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+margin-bottom: 0;
+}
+
+.site-logo {
+font-family: ‘IBM Plex Mono’, monospace;
+font-weight: 600;
+font-size: 13px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+}
+
+.site-meta {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–ink4);
+letter-spacing: 0.05em;
+}
+
+/* ── INTRO ── */
+#intro {
+justify-content: flex-start;
+}
+
+.intro-eyebrow {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–ink4);
+margin: 48px 0 20px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.intro-eyebrow::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–rule);
+}
+
+.intro-headline {
+font-family: ‘IBM Plex Sans’, sans-serif;
+font-size: clamp(36px, 7vw, 64px);
+font-weight: 300;
+line-height: 1.1;
+letter-spacing: -0.02em;
+color: var(–ink);
+margin-bottom: 32px;
+}
+
+.intro-headline strong {
+font-weight: 600;
+}
+
+.intro-body {
+font-size: 17px;
+font-weight: 300;
+color: var(–ink2);
+line-height: 1.7;
+max-width: 580px;
+margin-bottom: 48px;
+border-left: 3px solid var(–ink);
+padding-left: 20px;
+}
+
+.intro-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+border: 1px solid var(–rule);
+margin-bottom: 48px;
+}
+
+.stat-cell {
+padding: 24px 20px;
+border-right: 1px solid var(–rule);
+}
+.stat-cell:last-child { border-right: none; }
+
+.stat-n {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 28px;
+font-weight: 600;
+color: var(–ink);
+display: block;
+margin-bottom: 4px;
+}
+
+.stat-l {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–ink4);
+}
+
+.btn-start {
+display: inline-flex;
+align-items: center;
+gap: 16px;
+padding: 16px 32px;
+background: var(–ink);
+color: var(–bg);
+border: none;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 13px;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+cursor: pointer;
+transition: opacity 0.15s;
+margin-bottom: 80px;
+}
+.btn-start:hover { opacity: 0.8; }
+.btn-start .arrow { font-size: 18px; }
+
+.intro-disclaimer {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–ink4);
+margin-top: -36px;
+margin-bottom: 48px;
+}
+
+/* ── CHAPTER BREAK ── */
+.chapter-full {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 80px 0;
+}
+
+.ch-index {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–ink4);
+margin-bottom: 24px;
+}
+
+.ch-numeral {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: clamp(80px, 15vw, 140px);
+font-weight: 300;
+line-height: 0.9;
+color: var(–bg3);
+letter-spacing: -0.04em;
+margin-bottom: 8px;
+user-select: none;
+}
+
+.ch-title-big {
+font-family: ‘IBM Plex Sans’, sans-serif;
+font-size: clamp(28px, 5vw, 48px);
+font-weight: 600;
+letter-spacing: -0.02em;
+line-height: 1.1;
+color: var(–ink);
+margin-bottom: 20px;
+}
+
+.ch-desc {
+font-size: 16px;
+font-weight: 300;
+color: var(–ink3);
+max-width: 500px;
+line-height: 1.7;
+margin-bottom: 40px;
+}
+
+.ch-data {
+display: inline-block;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 13px;
+color: var(–ink4);
+border-top: 1px solid var(–rule);
+border-bottom: 1px solid var(–rule);
+padding: 12px 0;
+margin-bottom: 40px;
+width: 100%;
+max-width: 500px;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+position: fixed;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: var(–rule);
+z-index: 100;
+}
+.progress-fill {
+height: 100%;
+background: var(–ink);
+transition: width 0.4s ease;
+}
+
+.progress-info {
+position: fixed;
+top: 8px; right: 16px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+color: var(–ink4);
+z-index: 100;
+letter-spacing: 0.05em;
+}
+
+/* ── QUESTION ── */
+#question-screen {
+padding-top: 40px;
+justify-content: flex-start;
+}
+
+.q-page {
+padding: 60px 0 80px;
+border-top: 1px solid var(–rule);
+margin-top: 0;
+}
+
+.q-meta {
+display: flex;
+align-items: center;
+gap: 16px;
+margin-bottom: 32px;
+}
+
+.q-chapter-tag {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–ink4);
+border: 1px solid var(–rule);
+padding: 4px 10px;
+}
+
+.q-num-tag {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+color: var(–ink4);
+}
+
+.agent-line {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 12px;
+color: var(–ink3);
+margin-bottom: 24px;
+display: flex;
+align-items: baseline;
+gap: 10px;
+}
+
+.agent-id {
+font-weight: 600;
+color: var(–ink);
+letter-spacing: 0.1em;
+}
+
+.agent-says {
+color: var(–ink4);
+font-style: italic;
+}
+
+.q-text {
+font-size: clamp(20px, 3.5vw, 30px);
+font-weight: 300;
+line-height: 1.35;
+color: var(–ink);
+margin-bottom: 40px;
+letter-spacing: -0.01em;
+}
+
+.q-text strong {
+font-weight: 600;
+}
+
+/* OPTIONS */
+.options {
+display: flex;
+flex-direction: column;
+gap: 0;
+margin-bottom: 32px;
+border: 1px solid var(–rule);
+}
+
+.option {
+display: flex;
+align-items: flex-start;
+gap: 20px;
+padding: 18px 20px;
+border-bottom: 1px solid var(–rule);
+cursor: pointer;
+transition: background 0.1s;
+background: transparent;
+text-align: left;
+width: 100%;
+}
+.option:last-child { border-bottom: none; }
+.option:hover { background: var(–bg2); }
+
+.option.selected { background: var(–bg2); }
+
+.option.correct {
+background: var(–correct-bg);
+border-color: transparent;
+box-shadow: inset 3px 0 0 var(–correct);
+}
+.option.wrong {
+background: var(–wrong-bg);
+border-color: transparent;
+box-shadow: inset 3px 0 0 var(–wrong);
+opacity: 0.6;
+}
+.option.show-correct {
+background: var(–correct-bg);
+box-shadow: inset 3px 0 0 var(–correct);
+}
+
+.opt-key {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 12px;
+font-weight: 600;
+color: var(–ink4);
+min-width: 20px;
+flex-shrink: 0;
+padding-top: 2px;
+transition: color 0.1s;
+}
+
+.option.correct .opt-key { color: var(–correct); }
+.option.wrong .opt-key { color: var(–wrong); }
+
+.opt-body { flex: 1; }
+
+.opt-main {
+font-size: 15px;
+font-weight: 400;
+color: var(–ink);
+line-height: 1.4;
+}
+
+.opt-sub {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–ink4);
+margin-top: 3px;
+}
+
+/* FEEDBACK */
+.feedback {
+border-left: 3px solid var(–ink);
+padding: 20px 20px 20px 24px;
+background: var(–bg2);
+display: none;
+margin-bottom: 32px;
+}
+.feedback.show { display: block; }
+.feedback.fb-correct { border-color: var(–correct); }
+.feedback.fb-wrong { border-color: var(–wrong); }
+
+.fb-head {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+.feedback.fb-correct .fb-head { color: var(–correct); }
+.feedback.fb-wrong .fb-head { color: var(–wrong); }
+
+.fb-body {
+font-size: 14px;
+font-weight: 300;
+color: var(–ink2);
+line-height: 1.65;
+}
+.fb-body strong { font-weight: 600; color: var(–ink); }
+
+/* NEXT BTN */
+.btn-next {
+display: none;
+align-items: center;
+gap: 12px;
+padding: 14px 28px;
+background: var(–ink);
+color: var(–bg);
+border: none;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 12px;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+cursor: pointer;
+transition: opacity 0.15s;
+}
+.btn-next.show { display: inline-flex; }
+.btn-next:hover { opacity: 0.8; }
+
+/* ── RESULT ── */
+#result-screen {
+justify-content: flex-start;
+padding-bottom: 80px;
+}
+
+.result-header {
+border-bottom: 2px solid var(–ink);
+padding: 20px 0 12px;
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+margin-bottom: 64px;
+}
+
+.result-label-top {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–ink4);
+}
+
+.result-score-big {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: clamp(72px, 14vw, 120px);
+font-weight: 300;
+line-height: 1;
+letter-spacing: -0.04em;
+color: var(–ink);
+margin-bottom: 8px;
+}
+
+.result-score-sub {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 12px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–ink4);
+margin-bottom: 40px;
+}
+
+.result-verdict {
+font-size: clamp(22px, 4vw, 36px);
+font-weight: 300;
+line-height: 1.3;
+letter-spacing: -0.01em;
+color: var(–ink);
+margin-bottom: 20px;
+}
+.result-verdict strong { font-weight: 600; }
+
+.result-msg {
+font-size: 15px;
+font-weight: 300;
+color: var(–ink3);
+line-height: 1.75;
+max-width: 560px;
+margin-bottom: 48px;
+}
+.result-msg strong { color: var(–ink); font-weight: 500; }
+
+.result-rule {
+height: 1px;
+background: var(–rule);
+margin: 40px 0;
+}
+
+.result-truths {
+margin-bottom: 48px;
+}
+
+.truths-head {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–ink4);
+margin-bottom: 20px;
+}
+
+.truth-line {
+display: flex;
+gap: 20px;
+padding: 16px 0;
+border-top: 1px solid var(–rule);
+align-items: flex-start;
+}
+.truth-line:last-child { border-bottom: 1px solid var(–rule); }
+
+.truth-n {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–ink4);
+flex-shrink: 0;
+padding-top: 2px;
+min-width: 24px;
+}
+
+.truth-text {
+font-size: 15px;
+font-weight: 300;
+color: var(–ink);
+line-height: 1.5;
+}
+.truth-text strong { font-weight: 500; }
+
+.result-numbers {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+border: 1px solid var(–rule);
+margin-bottom: 40px;
+}
+.rn-cell {
+padding: 20px;
+border-right: 1px solid var(–rule);
+}
+.rn-cell:last-child { border-right: none; }
+.rn-n {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 24px;
+font-weight: 600;
+color: var(–ink);
+display: block;
+margin-bottom: 4px;
+}
+.rn-l {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–ink4);
+}
+
+.btn-restart {
+display: inline-flex;
+align-items: center;
+gap: 12px;
+padding: 12px 24px;
+background: transparent;
+color: var(–ink4);
+border: 1px solid var(–rule);
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.15s;
+}
+.btn-restart:hover { border-color: var(–ink); color: var(–ink); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(–bg); }
+::-webkit-scrollbar-thumb { background: var(–rule); }
+</style>
+
+</head>
+<body>
+
+<!-- ── INTRO ── -->
+
+<div class="screen active" id="intro">
+<div class="site-header">
+<div class="site-logo">Zaahi</div>
+<div class="site-meta">Investor Experience · Confidential</div>
+</div>
+
+<div class="intro-eyebrow">Intelligence Test</div>
+
+<h1 class="intro-headline">
+The world's largest<br>
+asset class has<br>
+<strong>no operating system.</strong>
+</h1>
+
+<p class="intro-body">
+$393 trillion in global real estate. Every parcel of land on Earth.
+Bought, sold, built, and managed through fragmented systems, opaque intermediaries,
+and institutional inertia. This is about to change.
+</p>
+
+<div class="intro-stats">
+<div class="stat-cell">
+<span class="stat-n">$393T</span>
+<span class="stat-l">Global real estate value<br>(Savills, 2025)</span>
+</div>
+<div class="stat-cell">
+<span class="stat-n">0</span>
+<span class="stat-l">Unified digital OS<br>for land exists</span>
+</div>
+<div class="stat-cell">
+<span class="stat-n">∞</span>
+<span class="stat-l">Countries waiting<br>for infrastructure</span>
+</div>
+</div>
+
+<button class="btn-start" onclick="start()">
+Begin the Test <span class="arrow">→</span>
+</button>
+<div class="intro-disclaimer">20 questions · ~8 minutes · changes how you see the world</div>
+</div>
+
+<!-- ── QUESTION SCREEN ── -->
+
+<div class="screen" id="question-screen">
+<div class="progress-wrap">
+<div class="progress-fill" id="prog-fill" style="width:0%"></div>
+</div>
+<div class="progress-info" id="prog-info">0 / 20</div>
+
+<div class="site-header">
+<div class="site-logo">Zaahi</div>
+<div class="site-meta" id="chapter-label-top">—</div>
+</div>
+
+<div id="q-render"></div>
+</div>
+
+<!-- ── RESULT ── -->
+
+<div class="screen" id="result-screen">
+<div class="result-header">
+<div class="site-logo">Zaahi</div>
+<div class="result-label-top">Test Complete</div>
+</div>
+
+<div class="result-score-big" id="r-score">—</div>
+<div class="result-score-sub" id="r-sub">Comprehension Score</div>
+
+<div class="result-verdict" id="r-verdict">—</div>
+<div class="result-msg" id="r-msg">—</div>
+
+<div class="result-numbers">
+<div class="rn-cell">
+<span class="rn-n" id="rn-correct">—</span>
+<span class="rn-l">Correct answers</span>
+</div>
+<div class="rn-cell">
+<span class="rn-n">$393T</span>
+<span class="rn-l">Market opportunity</span>
+</div>
+<div class="rn-cell">
+<span class="rn-n">1</span>
+<span class="rn-l">Team building the OS</span>
+</div>
+</div>
+
+<div class="result-truths">
+<div class="truths-head">What you now understand</div>
+<div class="truth-line"><div class="truth-n">01</div><div class="truth-text"><strong>$393 trillion</strong> — real estate is the world's largest asset class. More than all global stocks, bonds, and gold combined.</div></div>
+<div class="truth-line"><div class="truth-n">02</div><div class="truth-text">No unified digital infrastructure for land exists anywhere on Earth. <strong>Zaahi is building it.</strong></div></div>
+<div class="truth-line"><div class="truth-n">03</div><div class="truth-text">Every transaction on the platform generates compounding revenue. <strong>0.2% fee. Multiplied by every country.</strong></div></div>
+<div class="truth-line"><div class="truth-n">04</div><div class="truth-text">10% of all platform revenue automatically funds <strong>autonomous construction robots.</strong></div></div>
+<div class="truth-line"><div class="truth-n">05</div><div class="truth-text">Robots receive jobs from the digital twin. <strong>Land data → 3D model → physical building.</strong> No intermediary.</div></div>
+<div class="truth-line"><div class="truth-n">06</div><div class="truth-text">First country: UAE. Active conversations: Saudi Arabia, Ukraine, Albania, Iran, Syria. <strong>Destination: the planet.</strong></div></div>
+</div>
+
+<button class="btn-restart" onclick="restart()">↺ Restart</button>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+const ITEMS = [
+
+// ── I. THE PROBLEM ──────────────────────────────────
+{ type:'chapter', n:'I', title:'The Problem', desc:'Before you can see the solution — you must understand the scale of what is broken.', data:'$393T market. Zero infrastructure.' },
+
+{
+chapter:'I · The Problem',
+agent:{ id:'CAT', says:'Let me show you the world as it actually is.' },
+q:'A landowner in Dubai wants to sell his plot. He\'s been trying for <strong>six months</strong>. What is his core problem?',
+opts:[
+{ k:'A', t:'His asking price is too high', s:'Market forces at work' },
+{ k:'B', t:'There is no single trusted layer for land data, verified buyers, and transparent process', s:'Everything is fragmented, slow, and opaque', correct:true },
+{ k:'C', t:'There aren\'t enough buyers in Dubai', s:'One of the world\'s most active markets' },
+{ k:'D', t:'The government blocks private sales', s:'DLD is functional, just not connected' },
+],
+fb:{
+y:{ h:'Correct.', t:'The owner doesn\'t know which broker to trust. He can\'t verify buyers. He doesn\'t even know what documents he needs. <strong>Six months of noise, kickbacks, and misinformation.</strong> Zaahi resolves this in a single session.' },
+n:{ h:'Think structurally.', t:'The problem is not price or supply. It\'s <strong>the absence of infrastructure.</strong> No trusted participant registry. No unified document layer. No auditable process. A $393T market running on rumour and WhatsApp.' },
+}
+},
+
+{
+chapter:'I · The Problem',
+agent:{ id:'FALCON', says:'From altitude, the gap is obvious.' },
+q:'According to Savills research (2025), what is the total value of all global real estate?',
+opts:[
+{ k:'A', t:'$50 trillion', s:'Underestimate' },
+{ k:'B', t:'$100–200 trillion', s:'Significant but partial' },
+{ k:'C', t:'$393 trillion — the world\'s largest asset class, exceeding all global equities, bonds and gold combined', s:'Savills Global Real Estate 2025', correct:true },
+{ k:'D', t:'$800 trillion', s:'Overestimate' },
+],
+fb:{
+y:{ h:'Exact figure.', t:'<strong>$393 trillion.</strong> Four times global GDP. More than all the gold ever mined — combined. And yet: no digital operating system exists for any of it.' },
+n:{ h:'The number matters.', t:'Savills puts global real estate at <strong>$393.3 trillion as of early 2025.</strong> It is the world\'s single largest store of wealth. Larger than global equities, bonds, and gold — combined. Zero unified digital infrastructure.' },
+}
+},
+
+{
+chapter:'I · The Problem',
+agent:{ id:'MOLE', says:'I dig to where the real problem is buried.' },
+q:'What percentage of real estate transactions in high-growth markets involve undisclosed kickbacks, inflated intermediary fees, or opaque pricing?',
+opts:[
+{ k:'A', t:'Under 10% — regulations contain it', s:'Optimistic' },
+{ k:'B', t:'Around 20%', s:'Significant but manageable' },
+{ k:'C', t:'Industry experts estimate 40–70% in many markets — it is the operating model, not the exception', s:'Systemic corruption, not edge cases', correct:true },
+{ k:'D', t:'Only in politically unstable countries', s:'Geography limits the problem' },
+],
+fb:{
+y:{ h:'That\'s the buried truth.', t:'Every undisclosed fee, every inflated brokerage commission, every document bottleneck is wealth disappearing from the system. <strong>Zaahi\'s full blockchain audit trail makes this structurally impossible.</strong>' },
+n:{ h:'Deeper than it appears.', t:'Corruption in real estate is not an anomaly — it is how the market operates in the absence of infrastructure. <strong>Transparency is not a feature. It is the product.</strong>' },
+}
+},
+
+// ── II. THE INFRASTRUCTURE ──────────────────────────
+{ type:'chapter', n:'II', title:'The Infrastructure', desc:'One layer. Every participant. Every country. Additive to government — never competitive.', data:'Identity → Asset → Deal → Intelligence → Blockchain → UE5' },
+
+{
+chapter:'II · The Infrastructure',
+agent:{ id:'CAT', says:'This is what happens the moment you register.' },
+q:'When a verified landowner registers on Zaahi, what happens to his property documents?',
+opts:[
+{ k:'A', t:'He uploads them manually one by one', s:'Standard onboarding flow' },
+{ k:'B', t:'Title Deed, Affection Plan, Site Plan, DCR, SNIPs, and zoning regulations auto-sync directly from DLD and municipality APIs', s:'Government-connected, zero manual entry', correct:true },
+{ k:'C', t:'Zaahi staff process and enter data within 48 hours', s:'Centralised data entry' },
+{ k:'D', t:'Documents are collected only when a deal begins', s:'Deferred approach' },
+],
+fb:{
+y:{ h:'The magic moment.', t:'He opens his cabinet. <strong>Everything is already there.</strong> Including documents he didn\'t know existed — like the Affection Plan, which he can now pay for directly through the platform. Government earns. Owner gains. Zaahi grows.' },
+n:{ h:'No uploading. No waiting.', t:'Zaahi connects directly to government systems. The moment you\'re verified, <strong>your full asset profile is live.</strong> Zaahi doesn\'t replace government data — it makes it usable.' },
+}
+},
+
+{
+chapter:'II · The Infrastructure',
+agent:{ id:'FALCON', says:'The strategic position is everything.' },
+q:'Zaahi calls itself an "infrastructure layer." What does this mean for a government?',
+opts:[
+{ k:'A', t:'Zaahi replaces the land department\'s functions', s:'Direct substitution' },
+{ k:'B', t:'Zaahi competes with government portals for users', s:'Parallel systems' },
+{ k:'C', t:'Zaahi amplifies government systems — adding speed, transparency, and new revenue streams while the government remains the source of truth', s:'Additive, not disruptive to the state', correct:true },
+{ k:'D', t:'Zaahi operates as a parallel private registry', s:'Independent ecosystem' },
+],
+fb:{
+y:{ h:'The strategic genius.', t:'Every country Zaahi enters sees a <strong>boom in verified transactions, document fee collection, and tax-visible real estate activity.</strong> The government earns more. Citizens are protected. Zaahi grows. A genuine positive-sum structure.' },
+n:{ h:'Amplifier, not disruptor.', t:'Governments are Zaahi\'s partners, not competitors. That is why UAE, Saudi Arabia, Ukraine, Albania, Iran, and Syria are in active conversation. <strong>Zaahi makes government systems stronger — not weaker.</strong>' },
+}
+},
+
+{
+chapter:'II · The Infrastructure',
+agent:{ id:'MOLE', says:'Every parcel has a layer most people never see.' },
+q:'What does Zaahi\'s subsurface data layer show for each land parcel?',
+opts:[
+{ k:'A', t:'Only the land boundary and area', s:'Basic GIS' },
+{ k:'B', t:'Soil classification, groundwater depth, utility line positions, geological analysis, archaeological clearance status, and foundation recommendations', s:'Full subsurface intelligence in the 3D model', correct:true },
+{ k:'C', t:'Historical transaction prices only', s:'Market layer' },
+{ k:'D', t:'Subsurface data is only available post-construction', s:'Retroactive analysis' },
+],
+fb:{
+y:{ h:'What\'s beneath matters.', t:'Before a developer commits a dollar, they see <strong>exactly what is underground.</strong> Utility conflicts. Foundation requirements. Contamination risk. This alone eliminates millions in due diligence costs per project.' },
+n:{ h:'The Mole layer.', t:'I live underground. Every pipe, every soil layer, every clearance — <strong>visible in the 3D model before anyone signs anything.</strong> Information that used to require months of geotechnical surveys.' },
+}
+},
+
+{
+chapter:'II · The Infrastructure',
+agent:{ id:'CAT', says:'A deal that used to take six months. Watch what happens.' },
+q:'An owner lists his land and sets one condition: the first verified buyer to send a 10% deposit secures the plot. What happens next on Zaahi?',
+opts:[
+{ k:'A', t:'Agents contact the owner over several weeks to negotiate terms', s:'Traditional process' },
+{ k:'B', t:'Zaahi collects all offers and presents them after 30 days', s:'Auction model' },
+{ k:'C', t:'A verified buyer sends the deposit into escrow, triggering an exclusive agreement automatically — the deal process begins same day', s:'Instant, auditable, irreversible', correct:true },
+{ k:'D', t:'The owner must get DLD pre-approval before the condition is valid', s:'Pre-approval gate' },
+],
+fb:{
+y:{ h:'Six months to same day.', t:'Conditions set → deposit locked in escrow → exclusive agreement signed automatically → deal process begins. <strong>No negotiation theatre. No middlemen. No kickbacks possible.</strong> The process is the product.' },
+n:{ h:'This is the revolution.', t:'The owner sets conditions once. The system enforces them. The escrow locks. The agreement is immutable on blockchain. <strong>Six months of chaos compressed into minutes — and every step is auditable forever.</strong>' },
+}
+},
+
+// ── III. THE ECONOMICS ──────────────────────────────
+{ type:'chapter', n:'III', title:'The Economics', desc:'Every transaction. Every country. Every document. Every day. Compounding without ceiling.', data:'0.2% fee · 6 revenue streams · 10% → Robotics Fund' },
+
+{
+chapter:'III · The Economics',
+agent:{ id:'FALCON', says:'From altitude, I see the money.' },
+q:'Zaahi charges a minimum 0.2% fee on every transaction. Dubai\'s annual real estate transactions exceed $100 billion. What is the fee potential from Dubai alone?',
+opts:[
+{ k:'A', t:'~$10 million', s:'Conservative' },
+{ k:'B', t:'~$50 million', s:'Moderate' },
+{ k:'C', t:'$200 million+ annually — from one city', s:'0.2% of $100B+', correct:true },
+{ k:'D', t:'Fees are capped per transaction', s:'Volume limit exists' },
+],
+fb:{
+y:{ h:'And that\'s one city.', t:'$200M+ from Dubai alone. Add every emirate. Add Saudi Arabia — whose real estate market exceeds $1 trillion. Add Ukraine, rebuilding an entire nation. Add every country that licences the platform. <strong>The arithmetic compounds at civilisational scale.</strong>' },
+n:{ h:'The calculation.', t:'$100B × 0.002 = <strong>$200M minimum, annually, from Dubai alone.</strong> Before subscriptions, AI assistant fees, government document payments, and country-level platform licences. This is the floor, not the ceiling.' },
+}
+},
+
+{
+chapter:'III · The Economics',
+agent:{ id:'CAT', says:'Every action on the platform creates value. Every layer earns.' },
+q:'What are Zaahi\'s revenue streams?',
+opts:[
+{ k:'A', t:'Transaction fees only (0.2%)', s:'Single stream' },
+{ k:'B', t:'Transaction fees + subscriptions', s:'Two streams' },
+{ k:'C', t:'Transaction fees + subscriptions + AI assistant access (Cat, Mole, Falcon) + government document payments + country data licences + robotics contracts', s:'Six independent revenue streams', correct:true },
+{ k:'D', t:'Subscription only — free transactions to drive volume', s:'Freemium model' },
+],
+fb:{
+y:{ h:'Every layer earns.', t:'When a user pays for an Affection Plan document through Zaahi — <strong>the government earns its fee. Zaahi earns its margin.</strong> When a country licences the platform — Zaahi earns at national scale. Six streams, each independently significant.' },
+n:{ h:'Six independent streams.', t:'Transaction fees. Subscriptions by role. AI agents (Cat, Mole, Falcon). Government document facilitation. Country data licences. Robotics contracts. <strong>Each stream scales independently. Together they are transformational.</strong>' },
+}
+},
+
+{
+chapter:'III · The Economics',
+agent:{ id:'MOLE', says:'The deepest structure. The thing that makes it permanent.' },
+q:'10% of all Zaahi platform revenue is automatically allocated to a dedicated fund. What is its purpose?',
+opts:[
+{ k:'A', t:'Regulatory compliance reserves', s:'Legal buffer' },
+{ k:'B', t:'Investor dividend pool', s:'Distribution model' },
+{ k:'C', t:'The Robotics Construction Fund — financing the R&D, manufacturing, and deployment of autonomous construction robots', s:'Self-funding civilisational engine', correct:true },
+{ k:'D', t:'Marketing and international expansion', s:'Growth budget' },
+],
+fb:{
+y:{ h:'The loop that never stops.', t:'Every deal on the platform — every 0.2% fee, every subscription — automatically funds the machines that will build the next city. <strong>More transactions → more robots. More robots → faster development. Faster development → more transactions.</strong> The loop compounds forever.' },
+n:{ h:'10% of everything.', t:'The platform is not the destination. The platform funds the robots. The robots build to generate more platform transactions. <strong>It is a self-reinforcing civilisational engine, not a company with a product.</strong>' },
+}
+},
+
+// ── IV. THE TECHNOLOGY ──────────────────────────────
+{ type:'chapter', n:'IV', title:'The Technology', desc:'Unreal Engine 5. Blockchain. AI agents. A living digital replica of every city on Earth.', data:'Digital twin · Immutable audit · Three AI personalities' },
+
+{
+chapter:'IV · The Technology',
+agent:{ id:'FALCON', says:'Welcome to the city that knows itself.' },
+q:'What is the "digital twin" in Zaahi?',
+opts:[
+{ k:'A', t:'A data backup system', s:'Redundancy layer' },
+{ k:'B', t:'A 2D GIS map of land parcels', s:'Standard mapping' },
+{ k:'C', t:'A real-time 3D replica of every city in Unreal Engine 5, where each parcel is a living data object — showing what\'s above, below, and possible on that land', s:'The city that thinks', correct:true },
+{ k:'D', t:'A design tool for architects', s:'Visualisation software' },
+],
+fb:{
+y:{ h:'The city that thinks.', t:'You don\'t see a map. You see the zoning, the subsurface, the proposed buildings, the market heat, the deal status — all live, all connected. <strong>Every parcel is alive. The city knows itself.</strong> That\'s the foundation for robot deployment.' },
+n:{ h:'Not a map. A living model.', t:'In Zaahi\'s UE5 environment, you teleport between parcels, layer architect proposals onto real land, see underground infrastructure, and watch robots build in real-time. <strong>The digital and physical are the same thing.</strong>' },
+}
+},
+
+{
+chapter:'IV · The Technology',
+agent:{ id:'MOLE', says:'Nothing moves without the chain knowing.' },
+q:'Why does every deal status change on Zaahi get recorded on blockchain?',
+opts:[
+{ k:'A', t:'It\'s a marketing feature for crypto-native investors', s:'Trend alignment' },
+{ k:'B', t:'Blockchain storage is cheaper than databases at scale', s:'Cost optimisation' },
+{ k:'C', t:'To create an immutable, tamper-proof audit trail that any government, court, or participant can verify independently — permanently', s:'Sovereign-grade institutional trust', correct:true },
+{ k:'D', t:'To enable cryptocurrency payments only', s:'Payment rail purpose' },
+],
+fb:{
+y:{ h:'Trust without intermediaries.', t:'When a country licences Zaahi, they are not trusting a company. <strong>They are trusting mathematics.</strong> Every event, every signature, every payment exists permanently on a distributed chain. No court case, no regime change, no disaster alters it.' },
+n:{ h:'This is why governments want it.', t:'Blockchain here is not about crypto. It is about <strong>sovereign-grade institutional trust.</strong> Any court in UAE, Saudi Arabia, Ukraine, or Albania can independently verify any transaction. That is why governments sign agreements.' },
+}
+},
+
+{
+chapter:'IV · The Technology',
+agent:{ id:'CAT', says:'Three of us. Each owns a different layer of reality.' },
+q:'What is each AI agent\'s domain on Zaahi?',
+opts:[
+{ k:'A', t:'Cat: support / Mole: data / Falcon: notifications', s:'Generic assistant roles' },
+{ k:'B', t:'Cat: owner advisor and onboarding guide / Mole: subsurface and technical expert / Falcon: aerial navigation and market intelligence', s:'Three specialists, three layers of reality', correct:true },
+{ k:'C', t:'All three agents do the same work', s:'Interchangeable' },
+{ k:'D', t:'Cat: legal / Mole: financial / Falcon: construction', s:'Professional verticals' },
+],
+fb:{
+y:{ h:'Three layers of reality.', t:'Cat guides you through the platform world. Mole shows you what\'s underground. Falcon gives you the aerial view and market intelligence. <strong>Together: everything above, below, and around every parcel on Earth.</strong>' },
+n:{ h:'The soul of Zaahi.', t:'Cat. Mole. Falcon. Three personalities. Three domains. One seamless experience. <strong>People don\'t use features. They trust guides.</strong> That is the design principle.' },
+}
+},
+
+{
+chapter:'IV · The Technology',
+agent:{ id:'FALCON', says:'The platform operates through anything. Full stop.' },
+q:'If a natural disaster, armed conflict, or infrastructure outage strikes a region — what happens to Zaahi?',
+opts:[
+{ k:'A', t:'Platform goes offline until infrastructure is restored', s:'Standard cloud dependency' },
+{ k:'B', t:'Data is backed up and restored within 24 hours', s:'Standard recovery' },
+{ k:'C', t:'The platform continues operating via globally distributed blockchain nodes — participant assets and all deal states remain verifiable and accessible', s:'Designed for the real world — wars, disasters, outages', correct:true },
+{ k:'D', t:'Government partners maintain sovereign backup copies', s:'State-managed redundancy' },
+],
+fb:{
+y:{ h:'Built for reality.', t:'Ukraine is at war. Iran faces sanctions and instability. Syria is rebuilding from near-total destruction. <strong>These are not edge cases — they are the target markets.</strong> Zaahi works when everything else fails. The truth lives on a global chain.' },
+n:{ h:'Designed for chaos.', t:'The world is not stable. Zaahi is designed for instability. <strong>No single point of failure. Distributed nodes. Offline-capable via blockchain.</strong> Your assets are permanently yours — no war, no disaster, no government decision changes that.' },
+}
+},
+
+// ── V. THE ROBOT ────────────────────────────────────
+{ type:'chapter', n:'V', title:'The Robot', desc:'The real reason everything else exists. The loop that closes the system.', data:'Digital twin → instruction → robot → building → platform transaction → robot' },
+
+{
+chapter:'V · The Robot',
+agent:{ id:'MOLE', says:'This is the deepest level. The reason for all of it.' },
+q:'What is the ultimate strategic goal of Zaahi?',
+opts:[
+{ k:'A', t:'To become the world\'s largest real estate marketplace', s:'Platform dominance' },
+{ k:'B', t:'To digitise government land registries', s:'GovTech solution' },
+{ k:'C', t:'To build and deploy autonomous construction robots — funded by platform revenue — that receive build instructions directly from digital twin data and construct physical structures', s:'The full loop: land data → digital model → robot → building', correct:true },
+{ k:'D', t:'To tokenise all global real estate on blockchain', s:'Web3 thesis' },
+],
+fb:{
+y:{ h:'Now you see the whole picture.', t:'The platform is not the destination. <strong>The platform funds the robots. The robots build to generate more platform transactions. The transactions fund more robots.</strong> It is a permanently self-reinforcing civilisational engine.' },
+n:{ h:'Zoom out completely.', t:'Real estate data is not the goal. Blockchain is not the goal. The platform itself is not the goal. <strong>The goal is autonomous construction at civilisational scale.</strong> Everything else exists to fund it and give it perfect data to operate from.' },
+}
+},
+
+{
+chapter:'V · The Robot',
+agent:{ id:'CAT', says:'Watch how the loop closes completely.' },
+q:'How does a Zaahi construction robot know what to build?',
+opts:[
+{ k:'A', t:'An architect sends blueprints manually to the robot\'s operating system', s:'Traditional handoff' },
+{ k:'B', t:'The government specifies build requirements per zone', s:'Central planning model' },
+{ k:'C', t:'The approved architect proposal in the digital twin becomes the robot\'s instruction set directly — no translation, no intermediary, no manual conversion', s:'Digital twin as command language', correct:true },
+{ k:'D', t:'Robots handle only demolition — human teams construct', s:'Hybrid model' },
+],
+fb:{
+y:{ h:'The loop is closed.', t:'Owner lists land → architect proposes building in UE5 → owner approves → <strong>robot receives the digital twin as its construction instruction.</strong> The entire chain lives inside Zaahi. Nothing escapes the system.' },
+n:{ h:'Data becomes reality.', t:'The digital twin is not a visualisation tool. It is a <strong>command language for physical construction.</strong> When the deal closes, the robot begins from the same 3D model the owner approved. One system. End to end.' },
+}
+},
+
+];
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+let cursor = 0;
+let score = 0;
+let qNum = 0;
+let answered = false;
+const TOTAL_Q = ITEMS.filter(i => i.type !== 'chapter').length;
+
+function showScreen(id) {
+document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+
+function start() {
+cursor = 0; score = 0; qNum = 0; answered = false;
+showScreen('question-screen');
+render();
+}
+
+function restart() { start(); }
+
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
+function render() {
+if (cursor >= ITEMS.length) { showResult(); return; }
+const item = ITEMS[cursor];
+if (item.type === 'chapter') { renderChapter(item); return; }
+renderQuestion(item);
+}
+
+function renderChapter(ch) {
+document.getElementById('chapter-label-top').textContent = 'Chapter ' + ch.n;
+document.getElementById('prog-fill').style.width = Math.round(qNum/TOTAL_Q*100)+'%';
+document.getElementById('prog-info').textContent = qNum+' / '+TOTAL_Q;
+
+document.getElementById('q-render').innerHTML = `
+<div class="chapter-full">
+<div class="ch-index">Chapter</div>
+<div class="ch-numeral">${ch.n}</div>
+<div class="ch-title-big">${ch.title}</div>
+<p class="ch-desc">${ch.desc}</p>
+<div class="ch-data">${ch.data}</div>
+<button class="btn-next show" onclick="advance()">Continue <span>→</span></button>
+</div>
+`;
+}
+
+function renderQuestion(item) {
+qNum++;
+answered = false;
+document.getElementById('chapter-label-top').textContent = item.chapter;
+document.getElementById('prog-fill').style.width = Math.round((qNum-1)/TOTAL_Q*100)+'%';
+document.getElementById('prog-info').textContent = qNum+' / '+TOTAL_Q;
+
+let optsHTML = item.opts.map((o,i) => `
+<button class="option" id="opt-${i}" onclick="pick(${i}, ${!!o.correct})">
+<div class="opt-key">${o.k}</div>
+<div class="opt-body">
+<div class="opt-main">${o.t}</div>
+${o.s ? `<div class="opt-sub">${o.s}</div>` : ''}
+</div>
+</button>
+`).join('');
+
+document.getElementById('q-render').innerHTML = `
+<div class="q-page">
+<div class="q-meta">
+<div class="q-chapter-tag">${item.chapter}</div>
+<div class="q-num-tag">Q${qNum} of ${TOTAL_Q}</div>
+</div>
+<div class="agent-line">
+<span class="agent-id">${item.agent.id}</span>
+<span class="agent-says">"${item.agent.says}"</span>
+</div>
+<div class="q-text">${item.q}</div>
+<div class="options">${optsHTML}</div>
+<div class="feedback" id="fb"></div>
+<button class="btn-next" id="btn-next" onclick="advance()">Next <span>→</span></button>
+</div>
+`;
+}
+
+function pick(idx, isCorrect) {
+if (answered) return;
+answered = true;
+if (isCorrect) score++;
+
+const item = ITEMS[cursor];
+const opts = document.querySelectorAll('.option');
+
+opts.forEach((o, i) => {
+o.style.cursor = 'default';
+if (i === idx) {
+o.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+if (item.opts[i].correct && i !== idx) {
+o.classList.add('show-correct');
+}
+});
+
+const fb = document.getElementById('fb');
+const data = isCorrect ? item.fb.y : item.fb.n;
+fb.className = `feedback show ${isCorrect ? 'fb-correct' : 'fb-wrong'}`;
+fb.innerHTML = `<div class="fb-head">${data.h}</div><div class="fb-body">${data.t}</div>`;
+
+document.getElementById('btn-next').classList.add('show');
+}
+
+function advance() {
+cursor++;
+render();
+window.scrollTo(0,0);
+}
+
+function showResult() {
+const pct = Math.round(score/TOTAL_Q*100);
+document.getElementById('r-score').textContent = pct+'%';
+document.getElementById('rn-correct').textContent = score+'/'+TOTAL_Q;
+
+let verdict, msg;
+if (pct >= 85) {
+verdict = 'You see the whole system.';
+msg = `<strong>${score} of ${TOTAL_Q} correct.</strong> You understand what most people in the industry will take years to see — that Zaahi is not a product or a company. It is the infrastructure layer that the next century of human construction will run on. The land. The deal. The robot. The city. One system.`;
+} else if (pct >= 60) {
+verdict = 'You see the shape of it.';
+msg = `<strong>${score} of ${TOTAL_Q} correct.</strong> The outline is clear. A $393 trillion market. Zero existing infrastructure. A team building the OS from the ground up, starting in the UAE. The depth will become clearer as you go deeper.`;
+} else {
+verdict = 'The beginning of understanding.';
+msg = `<strong>${score} of ${TOTAL_Q} correct.</strong> This is intentionally complex — because the system it describes operates at civilisational scale. Read the feedback on each answer carefully. The full picture will come together.`;
+}
+
+document.getElementById('r-verdict').innerHTML = verdict;
+document.getElementById('r-msg').innerHTML = msg;
+document.getElementById('prog-fill').style.width = '100%';
+document.getElementById('prog-info').textContent = '✓ Complete';
+
+showScreen('result-screen');
+}
+</script>
+
+</body>
+</html>
